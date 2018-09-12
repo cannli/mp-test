@@ -6,7 +6,7 @@
       <button v-if='!userinfo.openId&&canIUse' open-type='getUserInfo' type='primary' @getuserinfo='login'>点击登录</button>
       <p v-if='!canIUse'>请升级微信版本</p>
     </div>
-    <YearProgress/>
+    <year-progress></year-progress>
     <button v-if='userinfo.openId' type="primary" class="btn" @click='scanBook'>添加图书</button>
   </div>
 </template>
@@ -14,7 +14,7 @@
 <script>
   import qcloud from 'wafer2-client-sdk'
   import config from '@/config'
-  import {showSuccess} from '@/util'
+  import {showSuccess,showModal, post} from '@/util'
   import YearProgress from '@/components/YearProgress'
 
   export default {
@@ -27,10 +27,23 @@
       }
     },
     methods: {
+      async addBook(isbn) {
+        const res = await post('/weapp/addbook', {
+          isbn,
+          openid: this.userinfo.openId
+        })
+        showModal('添加成功', `${res.title}添加成功`)
+      },
       scanBook() {
         wx.scanCode({
           success: res => {
-            console.log(res.result)
+            if (res.result) {
+              console.log(res.result)
+              this.addBook(res.result)
+            }
+          },
+          fail: res => {
+            console.log(res + '扫描失败~')
           }
         })
       },
@@ -83,12 +96,12 @@
     text-align: center;
   }
 
- /* img {
-    width: 150 rpx;
-    height: 150 rpx;
-    margin: 5 rpx;
-    border-radius: 50%;
-  }*/
+  /* img {
+     width: 150 rpx;
+     height: 150 rpx;
+     margin: 5 rpx;
+     border-radius: 50%;
+   }*/
 
   button {
     width: 80%;

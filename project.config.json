@@ -11,7 +11,7 @@
 	"qcloudRoot": "./server/",
 	"compileType": "miniprogram",
 	"appid": "wx5f0555b4afd23b28",
-	"projectname": "my-pmpro",
+	"projectname": "mp-tushu",
 	"condition": {
 		"search": {
 			"current": -1,
