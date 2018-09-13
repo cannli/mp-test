@@ -4,7 +4,7 @@
     <div class="hollow" :style='style'>
       ★★★★★
     </div>
-    
+
   </div>
 </template>
 <script>
@@ -20,7 +20,7 @@ export default {
   }
 }
 </script>
-<style lang='scss'>
+<style lang="scss" type="text/scss" rel="stylesheet/scss">
 .rate{
   position: relative;
   display: inline-block;

@@ -14,6 +14,7 @@
   }
 </script>
 
+
 <style>
   .text-footer{
     text-align: center;
@@ -22,6 +23,15 @@
   }
   .text-primary{
     color:#EA5149;
+  }
+  .page-title{
+    padding-left:20px;
+    background:#eee;
+    line-height: 40px;
+    font-size: 14px;
+  }
+  .right{
+    float: right;
   }
   .btn{
     color:white;

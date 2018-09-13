@@ -1,46 +1,7 @@
 <template>
   <div>
     <TopSwiper :tops='tops'></TopSwiper>
-    <!-- <Card :key='book.id' v-for='book in books' :book='book'></Card>-->
-    <a :href="detailUrl" v-for='book in books'>
-
-      <div class="book-card">
-        <div class="thumb" @click.stop="">
-          <img :src="book.image"
-               class="img"
-               mode="aspectFit"
-          />
-        </div>
-        <div class="detail">
-          <div class="row text-primary">
-            <div class="right">
-              {{book.rate}}
-              <Rate :value='book.rate'></Rate>
-            </div>
-            <div class="left">
-              {{book.title}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="right text-primary">
-              浏览量:{{book.count}}
-            </div>
-            <div class="left">
-
-              {{book.author}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="right">
-              {{book.user_info.nickName}}
-            </div>
-            <div class="left">
-              {{book.publisher}}
-            </div>
-          </div>
-        </div>
-      </div>
-    </a>
+    <card v-for='book in books' :key='book.id' :book='book'></card>
     <p class='text-footer' v-if='!more'>
       没有更多数据
     </p>
@@ -59,12 +20,12 @@
   // 2. page>0 数据长度<10 停止触底加载
 
   import {get} from '@/util'
-  import Card from '@/components/Card'
+  import card from '@/components/card'
   import TopSwiper from '@/components/TopSwiper'
 
   export default {
     components: {
-      Card,
+      card,
       TopSwiper
     },
     data() {
@@ -85,28 +46,27 @@
         const books = await get('/weapp/booklist', {page: this.page})
         if (books.list.length < 10 && this.page > 0) {
           this.more = false
-          console.log(this.more, '55555555555')
         }
-        if (init) {
+        if (init) { // init为true时，表示第一次进来，或 下拉刷新 直接把后台数据付给books,不累加
           this.books = books.list
           wx.stopPullDownRefresh()
         } else {
           // 下拉刷新，不能直接覆盖books 而是累加
           this.books = this.books.concat(books.list)
         }
-        console.log(this.books, 'this.books')
         wx.hideNavigationBarLoading()
       },
-      async getTop() {
+      async getTop() { // 获取图片轮播，按降序查询
         const tops = await get('/weapp/top')
         this.tops = tops.list
       }
     },
-    onPullDownRefresh() {
+    onPullDownRefresh() {  // 下拉更新
+      console.log(222)
       this.getList(true)
       this.getTop()
     },
-    onReachBottom() {
+    onReachBottom() {  // 上拉刷新
       if (!this.more) {
         // 没有更多了
         return false
@@ -120,7 +80,7 @@
     }
   }
 </script>
-<style lang='scss'>
+<style lang="scss" type="text/scss" rel="stylesheet/scss">
   .book-card {
     padding: 5px;
     overflow: hidden;
@@ -128,37 +88,37 @@
     margin-bottom: 5px;
     font-size: 14px;
 
-  .thumb {
-    width: 90px;
-    height: 90px;
-    float: left;
-    margin: 0 auto;
-    overflow: hidden;
+    .thumb {
+      width: 90px;
+      height: 90px;
+      float: left;
+      margin: 0 auto;
+      overflow: hidden;
 
-  .img {
-    max-width: 100%;
-    max-height: 100%;
-  }
+      .img {
+        max-width: 100%;
+        max-height: 100%;
+      }
 
-  }
-  .detail {
-    margin-left: 100px;
+    }
+    .detail {
+      margin-left: 100px;
 
-  .row {
-    line-height: 20px;
-    margin-bottom: 3px;
-  }
+      .row {
+        line-height: 20px;
+        margin-bottom: 3px;
+      }
 
-  .right {
-    float: right;
+      .right {
+        float: right;
 
-  }
+      }
 
-  .left {
-    margin-right: 80px;
-  }
+      .left {
+        margin-right: 80px;
+      }
 
-  }
+    }
 
   }
 

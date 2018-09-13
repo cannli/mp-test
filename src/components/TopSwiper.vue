@@ -10,17 +10,17 @@
     >
       <div :key='imgindex' v-for='(top,imgindex) in imgUrls'>
         <swiper-item>
-          <img  
+          <img
             @click='bookDetail(img)'
-            class='slide-image' 
-            mode='aspectFit' 
+            class='slide-image'
+            mode='aspectFit'
             v-for='img in top'
             :key='img.id'
-            :src="img.image" 
+            :src="img.image"
             >
         </swiper-item>
       </div>
-    
+
     </swiper>
   </div>
 </template>
