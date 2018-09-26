@@ -38,7 +38,6 @@
         </div>
       </div>
     </a>
-
   </div>
 </template>
 <script>

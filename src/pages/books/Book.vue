@@ -1,7 +1,7 @@
 <template>
   <div>
     <TopSwiper :tops='tops'></TopSwiper>
-    <Card :key='book.id' v-for='book in books' :book='book'></Card>
+    <card :key='book.id' v-for='book in books' :book='book'></card>
     <p class='text-footer' v-if='!more'>
       没有更多数据
     </p>
@@ -20,11 +20,11 @@
   // 2. page>0 数据长度<10 停止触底加载
 
   import {get} from '@/util'
-  import Card from '@/components/Card'
+  import card from '@/components/Card'
   import TopSwiper from '@/components/TopSwiper'
   export default {
     components: {
-      Card,
+      card,
       TopSwiper
     },
     data () {
